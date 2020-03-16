@@ -1,0 +1,4 @@
+export const ADD_TODO = 'ADD_TODO';
+export const TOGGLE_COMPLETION = 'TOGGLE_COMPLETION';
+export const REMOVE_TODO = 'REMOVE_TODO';
+export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
