@@ -1,14 +1,18 @@
 import React, { useReducer, Fragment } from 'react';
 import { todoReducer, initialState } from '../reducers/todo';
 import TodoForm from './TodoForm';
-import { Typography, List, ListItem, ListItemIcon, IconButton, Button, makeStyles } from '@material-ui/core';
+import { Typography, List, ListItem, ListItemIcon, IconButton, Button, makeStyles, Container, Grid, Divider } from '@material-ui/core';
 import { Check, Undo } from '@material-ui/icons';
 import { ADD_TODO, TOGGLE_COMPLETION, CLEAR_COMPLETED } from '../actions/types';
 import Moment from 'react-moment';
 
 const styles = {
     taskCompleted: { textDecoration: 'line-through' },
-    taskNotCompleted: { textDecoration: 'none' }
+    taskNotCompleted: { textDecoration: 'none' },
+    listItem: {
+        display: 'flex',
+        flexDirection: 'column'
+    }
 }
 
 const Todo = () => {
@@ -30,27 +34,33 @@ const Todo = () => {
     }
 
     return (
-        <div>
+        <Grid container direction='column' alignItems='center'>
+            <Typography variant='h2' align='center'>Todo List<br/>(the return)</Typography>
             <TodoForm addNewTodo={addNewTodo} />
             <Button onClick={clearCompletedTasks}>Clear completed tasks</Button>
             <List>
+                <Divider />
                 {state.map(todo => (
                     <Fragment>
-                        <ListItem key={todo.id}>
-                            <IconButton value={todo.id} onClick={toggleTaskCompletion}>{todo.completed ? <Undo /> : <Check />}</IconButton>
-                            <Typography style={todo.completed ? styles.taskCompleted : styles.teskNotCompleted}>
-                                {todo.item}
-                            </Typography>
+                        <ListItem style={styles.listItem} key={todo.id}>
+                            <Grid container alignItems='center'>
+                                <IconButton value={todo.id} onClick={toggleTaskCompletion}>{todo.completed ? <Undo /> : <Check />}</IconButton>
+                                <Typography style={todo.completed ? styles.taskCompleted : styles.teskNotCompleted}>
+                                    {todo.item}
+                                </Typography>
+                            </Grid>
+                            <div>
+                                { todo.completed ? 
+                                    <Typography variant='caption'>Completed on <Moment format="MM/DD/YYYY">{todo.dateCompletion}</Moment></Typography>
+                                : null }
+                            </div>
                         </ListItem>
-                        
-                        { todo.completed ? 
-                            <Typography><Moment format="MM/DD/YYYY">{todo.dateCompletion}</Moment></Typography>
-                        : null }
+                        <Divider />
                     </Fragment>
                 ))}
             </List>
             {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
-        </div>
+        </Grid>
     )
 }
 
