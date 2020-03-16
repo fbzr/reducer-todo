@@ -17,7 +17,6 @@ const TodoForm = ({ addNewTodo }) => {
             <IconButton disabled={newTask === ''} type='submit'>
                 <Add />
             </IconButton>
-            <pre>{JSON.stringify(newTask, null, 2)}</pre>
         </form>
     )
 }
