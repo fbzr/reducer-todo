@@ -16,9 +16,14 @@ export const initialState = [{
 }]
 
 export const todoReducer = (state, action) => {
-    switch(action.type) {
+    const { type, payload } = action;
+    switch(type) {
         case ADD_TODO:
-            return state;
+            return [ ...state, {
+                item: payload.item,
+                completed: payload.completed,
+                id: payload.id
+            }];
         case TOGGLE_COMPLETED:
             return state;
         case REMOVE_TODO:
